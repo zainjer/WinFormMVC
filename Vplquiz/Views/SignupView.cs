@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Vplquiz.Controllers;
+using Vplquiz.Resources;
 
 namespace Vplquiz.Views
 {
@@ -24,41 +25,14 @@ namespace Vplquiz.Views
         public void FirstTime() => lblFirstTime.Show();
         
         //Events
-        private void tbRePassword_Click(object sender, EventArgs e) => TbClickHandler(tbRePassword, true);
-        private void tbRePassword_Leave(object sender, EventArgs e) => TbLeaveHandler(tbRePassword, "Re-Type Password");
-        private void tbPassword_Leave(object sender, EventArgs e) => TbLeaveHandler(tbPassword, "Password");
-        private void tbPassword_Click(object sender, EventArgs e) => TbClickHandler(tbPassword,true);
-        private void tbEmail_Click(object sender, EventArgs e) => TbClickHandler(tbEmail);
-        private void tbEmail_Leave(object sender, EventArgs e) => TbLeaveHandler(tbEmail,"Email");
+        private void tbRePassword_Click(object sender, EventArgs e) => Utils.TbClickHandler(tbRePassword, true);
+        private void tbRePassword_Leave(object sender, EventArgs e) => Utils.TbLeaveHandler(tbRePassword, "Your Re-Type Password");
+        private void tbPassword_Leave(object sender, EventArgs e) => Utils.TbLeaveHandler(tbPassword, "Your Password");
+        private void tbPassword_Click(object sender, EventArgs e) => Utils.TbClickHandler(tbPassword,true);
+        private void tbEmail_Click(object sender, EventArgs e) => Utils.TbClickHandler(tbEmail);
+        private void tbEmail_Leave(object sender, EventArgs e) => Utils.TbLeaveHandler(tbEmail, "Your Email");
 
-
-        private void TbClickHandler(TextBox textBox,bool isPassword = false)
-        {
-            if (isPassword)
-            {
-                var status = textBox.Text.ToLower().Contains("password");
-                if (!status) return;
-            }
-            else
-            {
-                var status = textBox.Text.ToLower().Contains("email");
-                if (!status) return;
-            }
-
-            textBox.Text = "";
-            textBox.ForeColor = Color.Black;
-            textBox.UseSystemPasswordChar = isPassword;
-        }
-
-        private void TbLeaveHandler(TextBox textBox, string message)
-        {
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.Text = message;
-                textBox.ForeColor = Color.DimGray;
-                textBox.UseSystemPasswordChar = false;
-            }
-        }
+      
 
         private void btnSignup_Click(object sender, EventArgs e)
         {
@@ -112,6 +86,13 @@ namespace Vplquiz.Views
             SignInView view = new SignInView();
             view.Show();
             this.Close();
+        }
+
+        private void SignupView_Click(object sender, EventArgs e)
+        {
+            Utils.TbLeaveHandler(tbRePassword, "Re-Type Password");
+            Utils.TbLeaveHandler(tbPassword, "Your Password");
+            Utils.TbLeaveHandler(tbEmail, "Your Email");
         }
     }
 }

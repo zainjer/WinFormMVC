@@ -51,9 +51,12 @@ namespace Vplquiz.Views
             this.tbPassword.Location = new System.Drawing.Point(285, 228);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(200, 27);
-            this.tbPassword.TabIndex = 9;
+            this.tbPassword.TabIndex = 2;
             this.tbPassword.Text = "Your Password";
             this.tbPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbPassword.Click += new System.EventHandler(this.tbPassword_Click);
+            this.tbPassword.Enter += new System.EventHandler(this.tbPassword_Click);
+            this.tbPassword.Leave += new System.EventHandler(this.tbPassword_Leave);
             // 
             // tbEmail
             // 
@@ -64,9 +67,12 @@ namespace Vplquiz.Views
             this.tbEmail.Location = new System.Drawing.Point(285, 195);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(200, 27);
-            this.tbEmail.TabIndex = 8;
+            this.tbEmail.TabIndex = 1;
             this.tbEmail.Text = "Your Email";
             this.tbEmail.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.tbEmail.Click += new System.EventHandler(this.tbEmail_Click);
+            this.tbEmail.Enter += new System.EventHandler(this.tbEmail_Click);
+            this.tbEmail.Leave += new System.EventHandler(this.tbEmail_Leave);
             // 
             // label2
             // 
@@ -132,7 +138,7 @@ namespace Vplquiz.Views
             this.rbStudent.Location = new System.Drawing.Point(6, 19);
             this.rbStudent.Name = "rbStudent";
             this.rbStudent.Size = new System.Drawing.Size(62, 17);
-            this.rbStudent.TabIndex = 5;
+            this.rbStudent.TabIndex = 0;
             this.rbStudent.TabStop = true;
             this.rbStudent.Text = "Student";
             this.rbStudent.UseVisualStyleBackColor = true;
@@ -195,6 +201,7 @@ namespace Vplquiz.Views
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "SignInView";
             this.Text = "Sign In";
+            this.Click += new System.EventHandler(this.SignInView_Click);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

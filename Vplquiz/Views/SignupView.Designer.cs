@@ -220,6 +220,7 @@ namespace Vplquiz.Views
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "SignupView";
             this.Text = "SignupView";
+            this.Click += new System.EventHandler(this.SignupView_Click);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
