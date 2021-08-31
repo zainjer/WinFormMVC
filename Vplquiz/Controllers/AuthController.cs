@@ -60,7 +60,8 @@ namespace Vplquiz.Controllers
 
                     AppDbContext.Instance.Instructors.Add(instructor);
                     AppDbContext.Instance.SaveChanges();
-                    var instructorDashboard = new InstructorDashboardView(instructor);
+                    var students = AppDbContext.Instance.Students.ToList();
+                    var instructorDashboard = new InstructorDashboardView(instructor, students);
                     instructorDashboard.Show();
                 }
             }
@@ -71,9 +72,32 @@ namespace Vplquiz.Controllers
             }
         }
 
-        public void SignIn(string email, string password, bool isStudent)
+        public (Student student,Instructor instructorEntity) SignIn(string email, string password, bool isStudent)
         {
+            var hashPass = Utils.GetHash(password);
+            if (isStudent)
+            {
+                var std = AppDbContext.Instance.Students.FirstOrDefault(x => x.EmailAddress.ToLower().Trim().Equals(email) && x.Password.Equals(hashPass));
+                
+                if(std != null)
+                {
+                    CreateCookie(std.EmailAddress, std.Password, true);
+                }
 
+                return (std, null);
+            }
+            else
+            {
+                
+                var inst = AppDbContext.Instance.Instructors.FirstOrDefault(x => x.EmailAddress.ToLower().Trim().Equals(email) && x.Password.Equals(hashPass));
+
+                if (inst != null)
+                {
+                    CreateCookie(inst.EmailAddress, inst.Password, false);
+                }
+
+                return (null, inst);
+            }
         }
 
         public void CreateCookie(string email, string password, bool isStudent)
@@ -129,6 +153,11 @@ namespace Vplquiz.Controllers
             }
 
             return null;
+        }
+
+        public void RemoveCookie()
+        {
+            File.WriteAllText(cookieFilePath, "");
         }
 
 

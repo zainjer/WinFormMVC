@@ -25,7 +25,7 @@ namespace Vplquiz.Views
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            new SignupView().Show();
+            EntryController.Instance.Startup();
             this.Hide();
             
         }

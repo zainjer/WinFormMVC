@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Vplquiz.Controllers;
+using Vplquiz.DAL;
 using Vplquiz.Resources;
 
 namespace Vplquiz.Views
@@ -35,6 +37,56 @@ namespace Vplquiz.Views
         {
             Utils.TbLeaveHandler(tbPassword, "Your Password");
             Utils.TbLeaveHandler(tbEmail, "Your Email");
+        }
+
+        private void btnSignup_Click(object sender, EventArgs e)
+        {
+            if (Validate())
+            {
+                var result = AuthController.Instance.SignIn(tbEmail.Text, tbPassword.Text, rbStudent.Checked);
+                if (result.instructorEntity != null)
+                {
+                    new InstructorDashboardView(result.instructorEntity, AppDbContext.Instance.Students.ToList());
+                    this.Close();
+                    return;
+                } else if (result.student != null)
+                {
+                    new StudentDashboardView(result.student);
+                    this.Close();
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show("Could not find a user with that email and password combination", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+        }
+
+        private bool Validate()
+        {
+            if ( string.IsNullOrWhiteSpace(tbPassword.Text)
+                || string.IsNullOrWhiteSpace(tbEmail.Text)
+                || tbEmail.Text.ToLower().Equals("email")
+                || tbPassword.Text.ToLower().Equals("password")
+                || tbEmail.Text.ToLower().Equals("re-type password")
+            )
+
+            {
+                MessageBox.Show("Please fill out all fields!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var emailRegex = AuthController.GetEmailRegex();
+            var passwordRegex = AuthController.GetPasswordRegex();
+
+            if (!emailRegex.IsMatch(tbEmail.Text))
+            {
+                MessageBox.Show("Invalid Email address!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
         }
     }
 }

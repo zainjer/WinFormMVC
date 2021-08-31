@@ -169,6 +169,7 @@ namespace Vplquiz.Views
             this.btnSignup.TabIndex = 14;
             this.btnSignup.Text = "Login";
             this.btnSignup.UseVisualStyleBackColor = false;
+            this.btnSignup.Click += new System.EventHandler(this.btnSignup_Click);
             // 
             // lblSignUp
             // 
